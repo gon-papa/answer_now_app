@@ -14,8 +14,6 @@ class ChatRepository extends BaseRepository {
         final api = getClient(token).chat;
         final response = await api.getChats(
           cursor: cursor,
-          // todo :後で消す
-          limit: 10,
           keyword: keyword,
         );
 
