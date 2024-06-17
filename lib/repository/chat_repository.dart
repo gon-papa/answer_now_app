@@ -23,6 +23,23 @@ class ChatRepository extends BaseRepository {
 
     return result;
   }
+
+  Future<Result<ChatShowResponse>> getChatDetail(String uuid) async {
+    final result = runApi.run(
+      onSuccess: () async {
+        final token = await ref.read(secure_token_provider).getToken();
+        final api = getClient(token).chat;
+        final response = await api.getChatDetail(
+          uuid: uuid,
+          limit: 100,
+        );
+
+        return response;
+      },
+    );
+
+    return result;
+  }
 }
 
 final chatRepositoryProvider = Provider.autoDispose<ChatRepository>(

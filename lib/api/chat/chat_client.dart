@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/chat_index_response.dart';
+import '../models/chat_save_message_request.dart';
 import '../models/chat_show_response.dart';
 
 part 'chat_client.g.dart';
@@ -32,5 +33,13 @@ abstract class ChatClient {
     @Path('uuid') required String uuid,
     @Query('limit') int limit = 20,
     @Query('cursor') int? cursor,
+  });
+
+  /// ゲスト用チャットメッセージ保存.
+  ///
+  /// チャットメッセージを保存します。.
+  @POST('/chat/guest-message')
+  Future<void> saveChatMessage({
+    @Body() required ChatSaveMessageRequest body,
   });
 }

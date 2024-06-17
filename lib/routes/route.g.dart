@@ -25,6 +25,12 @@ RouteBase get $rootShellRoute => ShellRouteData.$route(
         GoRouteData.$route(
           path: '/home',
           factory: $HomeExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'chat-detail/:corporationUuid/:chatUuid',
+              factory: $ChatDetailExtension._fromState,
+            ),
+          ],
         ),
       ],
     );
@@ -73,6 +79,26 @@ extension $HomeExtension on Home {
 
   String get location => GoRouteData.$location(
         '/home',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ChatDetailExtension on ChatDetail {
+  static ChatDetail _fromState(GoRouterState state) => ChatDetail(
+        state.pathParameters['corporationUuid']!,
+        state.pathParameters['chatUuid']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/home/chat-detail/${Uri.encodeComponent(corporationUuid)}/${Uri.encodeComponent(chatUuid)}',
       );
 
   void go(BuildContext context) => context.go(location);

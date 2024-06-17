@@ -8,8 +8,8 @@ part of 'http_validation_error.dart';
 
 HttpValidationError _$HttpValidationErrorFromJson(Map<String, dynamic> json) =>
     HttpValidationError(
-      detail: (json['detail'] as List<dynamic>)
-          .map((e) => ValidationError.fromJson(e as Map<String, dynamic>))
+      detail: (json['detail'] as List<dynamic>?)
+          ?.map((e) => ValidationError.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

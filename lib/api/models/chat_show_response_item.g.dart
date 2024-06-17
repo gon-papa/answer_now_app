@@ -13,6 +13,9 @@ ChatShowResponseItem _$ChatShowResponseItemFromJson(
       body: json['body'] as String,
       sendAt: DateTime.parse(json['send_at'] as String),
       sender: (json['sender'] as num).toInt(),
+      user: json['user'] == null
+          ? null
+          : UserResponseItem.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ChatShowResponseItemToJson(
@@ -22,4 +25,5 @@ Map<String, dynamic> _$ChatShowResponseItemToJson(
       'body': instance.body,
       'send_at': instance.sendAt.toIso8601String(),
       'sender': instance.sender,
+      'user': instance.user,
     };

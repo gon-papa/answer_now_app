@@ -9,12 +9,12 @@ part 'body_sign_in.g.dart';
 @JsonSerializable()
 class BodySignIn {
   const BodySignIn({
-    required this.grantType,
     required this.username,
     required this.password,
-    required this.clientId,
-    required this.clientSecret,
     this.scope = '',
+    this.grantType,
+    this.clientId,
+    this.clientSecret,
   });
   
   factory BodySignIn.fromJson(Map<String, Object?> json) => _$BodySignInFromJson(json);

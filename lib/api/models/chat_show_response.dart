@@ -11,8 +11,8 @@ part 'chat_show_response.g.dart';
 @JsonSerializable()
 class ChatShowResponse {
   const ChatShowResponse({
-    required this.data,
-    required this.cursor,
+    this.data,
+    this.cursor,
     this.status = 200,
     this.message = 'ok',
   });
@@ -23,7 +23,7 @@ class ChatShowResponse {
   final int status;
 
   /// チャット詳細情報
-  final List<ChatShowResponseItem> data;
+  final List<ChatShowResponseItem>? data;
 
   /// メッセージ
   final String message;

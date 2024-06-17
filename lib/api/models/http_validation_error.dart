@@ -11,12 +11,12 @@ part 'http_validation_error.g.dart';
 @JsonSerializable()
 class HttpValidationError {
   const HttpValidationError({
-    required this.detail,
+    this.detail,
   });
   
   factory HttpValidationError.fromJson(Map<String, Object?> json) => _$HttpValidationErrorFromJson(json);
   
-  final List<ValidationError> detail;
+  final List<ValidationError>? detail;
 
   Map<String, Object?> toJson() => _$HttpValidationErrorToJson(this);
 }

@@ -3,7 +3,7 @@ import 'package:answer_now_app/repository/auth_repository.dart';
 
 part 'user_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class User extends _$User {
   @override
   UserResponseItem? build() => null;

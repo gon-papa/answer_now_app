@@ -11,7 +11,7 @@ part 'user_response.g.dart';
 @JsonSerializable()
 class UserResponse {
   const UserResponse({
-    required this.data,
+    this.data,
     this.status = 200,
     this.message = 'ok',
   });
@@ -22,7 +22,7 @@ class UserResponse {
   final int status;
 
   /// ユーザー情報
-  final UserResponseItem data;
+  final UserResponseItem? data;
 
   /// メッセージ
   final String message;

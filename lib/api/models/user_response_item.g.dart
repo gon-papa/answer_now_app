@@ -10,6 +10,7 @@ UserResponseItem _$UserResponseItemFromJson(Map<String, dynamic> json) =>
     UserResponseItem(
       id: (json['id'] as num).toInt(),
       uuid: json['uuid'] as String,
+      accountName: json['account_name'] as String,
       email: json['email'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
@@ -19,6 +20,7 @@ Map<String, dynamic> _$UserResponseItemToJson(UserResponseItem instance) =>
     <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,
+      'account_name': instance.accountName,
       'email': instance.email,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),

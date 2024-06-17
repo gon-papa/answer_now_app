@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'user/user_client.dart';
 import 'auth/auth_client.dart';
 import 'chat/chat_client.dart';
+import 'guest/guest_client.dart';
 
 /// app_name `v0.1.0`.
 ///
@@ -24,10 +25,13 @@ class RestClient {
   UserClient? _user;
   AuthClient? _auth;
   ChatClient? _chat;
+  GuestClient? _guest;
 
   UserClient get user => _user ??= UserClient(_dio, baseUrl: _baseUrl);
 
   AuthClient get auth => _auth ??= AuthClient(_dio, baseUrl: _baseUrl);
 
   ChatClient get chat => _chat ??= ChatClient(_dio, baseUrl: _baseUrl);
+
+  GuestClient get guest => _guest ??= GuestClient(_dio, baseUrl: _baseUrl);
 }

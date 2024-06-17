@@ -8,8 +8,8 @@ part of 'chat_show_response.dart';
 
 ChatShowResponse _$ChatShowResponseFromJson(Map<String, dynamic> json) =>
     ChatShowResponse(
-      data: (json['data'] as List<dynamic>)
-          .map((e) => ChatShowResponseItem.fromJson(e as Map<String, dynamic>))
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => ChatShowResponseItem.fromJson(e as Map<String, dynamic>))
           .toList(),
       cursor: (json['cursor'] as num?)?.toInt(),
       status: (json['status'] as num?)?.toInt() ?? 200,

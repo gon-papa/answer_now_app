@@ -6,12 +6,14 @@
 export 'user/user_client.dart';
 export 'auth/auth_client.dart';
 export 'chat/chat_client.dart';
+export 'guest/guest_client.dart';
 // Data classes
 export 'models/auth_response.dart';
 export 'models/auth_response_item.dart';
 export 'models/body_sign_in.dart';
 export 'models/chat_index_response.dart';
 export 'models/chat_index_response_item.dart';
+export 'models/chat_save_message_request.dart';
 export 'models/chat_show_response.dart';
 export 'models/chat_show_response_item.dart';
 export 'models/error_detail.dart';

@@ -9,7 +9,7 @@ part 'json_response.g.dart';
 @JsonSerializable()
 class JsonResponse {
   const JsonResponse({
-    required this.data,
+    this.data,
     this.status = 200,
     this.message = 'ok',
   });

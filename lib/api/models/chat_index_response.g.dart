@@ -8,8 +8,9 @@ part of 'chat_index_response.dart';
 
 ChatIndexResponse _$ChatIndexResponseFromJson(Map<String, dynamic> json) =>
     ChatIndexResponse(
-      data: (json['data'] as List<dynamic>)
-          .map((e) => ChatIndexResponseItem.fromJson(e as Map<String, dynamic>))
+      data: (json['data'] as List<dynamic>?)
+          ?.map(
+              (e) => ChatIndexResponseItem.fromJson(e as Map<String, dynamic>))
           .toList(),
       cursor: (json['cursor'] as num?)?.toInt(),
       status: (json['status'] as num?)?.toInt() ?? 200,

@@ -7,7 +7,9 @@ part of 'user_response.dart';
 // **************************************************************************
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
-      data: UserResponseItem.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null
+          ? null
+          : UserResponseItem.fromJson(json['data'] as Map<String, dynamic>),
       status: (json['status'] as num?)?.toInt() ?? 200,
       message: json['message'] as String? ?? 'ok',
     );

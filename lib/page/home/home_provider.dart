@@ -23,7 +23,7 @@ class Chats extends _$Chats {
 
   void update(value) {
     state = [...state, ...value]
-      ..sort((a, b) => b!.startedAt.compareTo(a!.startedAt));
+      ..sort((a, b) => b!.latestSendAt.compareTo(a!.latestSendAt));
   }
 
   Future<Result<ChatIndexResponse?>> getChats() async {
@@ -37,7 +37,7 @@ class Chats extends _$Chats {
             );
         if (data.isSuccess && data.data != null) {
           cursor = data.data!.cursor;
-          state = data.data!.data;
+          state = data.data!.data!;
 
           return data;
         } else {
@@ -66,7 +66,7 @@ class Chats extends _$Chats {
             );
         if (data.isSuccess && data.data != null) {
           cursor = data.data!.cursor;
-          update(data.data!.data.toList());
+          update(data.data!.data!.toList());
 
           return data;
         } else {

@@ -7,12 +7,12 @@ part of 'body_sign_in.dart';
 // **************************************************************************
 
 BodySignIn _$BodySignInFromJson(Map<String, dynamic> json) => BodySignIn(
-      grantType: json['grant_type'] as String?,
       username: json['username'] as String,
       password: json['password'] as String,
+      scope: json['scope'] as String? ?? '',
+      grantType: json['grant_type'] as String?,
       clientId: json['client_id'] as String?,
       clientSecret: json['client_secret'] as String?,
-      scope: json['scope'] as String? ?? '',
     );
 
 Map<String, dynamic> _$BodySignInToJson(BodySignIn instance) =>

@@ -11,6 +11,7 @@ class UserResponseItem {
   const UserResponseItem({
     required this.id,
     required this.uuid,
+    required this.accountName,
     required this.email,
     required this.createdAt,
     required this.updatedAt,
@@ -20,6 +21,8 @@ class UserResponseItem {
   
   final int id;
   final String uuid;
+  @JsonKey(name: 'account_name')
+  final String accountName;
   final String email;
   @JsonKey(name: 'created_at')
   final DateTime createdAt;

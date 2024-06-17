@@ -1,6 +1,8 @@
 import 'package:answer_now_app/importer.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() {
+  tz.initializeTimeZones();
   runApp(const ProviderScope(child: MainApp()));
 }
 

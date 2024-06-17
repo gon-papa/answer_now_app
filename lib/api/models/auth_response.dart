@@ -11,7 +11,7 @@ part 'auth_response.g.dart';
 @JsonSerializable()
 class AuthResponse {
   const AuthResponse({
-    required this.data,
+    this.data,
     this.status = 200,
     this.message = 'ok',
   });
@@ -22,7 +22,7 @@ class AuthResponse {
   final int status;
 
   /// ユーザー情報
-  final AuthResponseItem data;
+  final AuthResponseItem? data;
 
   /// メッセージ
   final String message;

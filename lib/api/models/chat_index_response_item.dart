@@ -12,12 +12,10 @@ class ChatIndexResponseItem {
     required this.uuid,
     required this.userId,
     required this.userName,
-    required this.corporationId,
+    required this.corporationUuid,
     required this.corporationName,
-    required this.startedAt,
-    required this.responsedAt,
-    required this.closedAt,
     required this.latestMessage,
+    required this.latestSendAt,
   });
   
   factory ChatIndexResponseItem.fromJson(Map<String, Object?> json) => _$ChatIndexResponseItemFromJson(json);
@@ -27,18 +25,14 @@ class ChatIndexResponseItem {
   final int? userId;
   @JsonKey(name: 'user_name')
   final String? userName;
-  @JsonKey(name: 'corporation_id')
-  final int corporationId;
+  @JsonKey(name: 'corporation_uuid')
+  final String corporationUuid;
   @JsonKey(name: 'corporation_name')
   final String corporationName;
-  @JsonKey(name: 'started_at')
-  final DateTime startedAt;
-  @JsonKey(name: 'responsed_at')
-  final DateTime? responsedAt;
-  @JsonKey(name: 'closed_at')
-  final DateTime? closedAt;
   @JsonKey(name: 'latest_message')
-  final String? latestMessage;
+  final String latestMessage;
+  @JsonKey(name: 'latest_send_at')
+  final DateTime latestSendAt;
 
   Map<String, Object?> toJson() => _$ChatIndexResponseItemToJson(this);
 }

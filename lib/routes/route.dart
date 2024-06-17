@@ -1,4 +1,5 @@
 import 'package:answer_now_app/importer.dart';
+import 'package:answer_now_app/page/home/chat_detail.dart';
 import 'package:answer_now_app/page/home/home_provider.dart';
 
 part 'route.g.dart';
@@ -34,7 +35,8 @@ final globalKeyProvider = Provider((_) => GlobalKey<NavigatorState>());
     TypedGoRoute<Home>(
       path: '/home',
       routes: [
-        // TypedGoRoute<ChatDetail>(path: '/chat-detail'),
+        TypedGoRoute<ChatDetail>(
+            path: 'chat-detail/:corporationUuid/:chatUuid'),
       ],
     ),
   ],
@@ -72,13 +74,16 @@ class Home extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => const HomePage();
 }
 
-// class ChatDetail extends GoRouteData {
-//   const ChatDetail();
+class ChatDetail extends GoRouteData {
+  const ChatDetail(this.corporationUuid, this.chatUuid);
 
-//   @override
-//   Widget build(BuildContext context, GoRouterState state) =>
-//       const ChatDetailPage();
-// }
+  final String corporationUuid;
+  final String chatUuid;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      ChatDetailPage(corporationUuid: corporationUuid, chatUuid: chatUuid);
+}
 
 CustomTransitionPage<void> noAnimationPage(Widget page) {
   return CustomTransitionPage<void>(

@@ -4,6 +4,8 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
+import 'user_response_item.dart';
+
 part 'chat_show_response_item.g.dart';
 
 @JsonSerializable()
@@ -13,6 +15,7 @@ class ChatShowResponseItem {
     required this.body,
     required this.sendAt,
     required this.sender,
+    required this.user,
   });
   
   factory ChatShowResponseItem.fromJson(Map<String, Object?> json) => _$ChatShowResponseItemFromJson(json);
@@ -22,6 +25,7 @@ class ChatShowResponseItem {
   @JsonKey(name: 'send_at')
   final DateTime sendAt;
   final int sender;
+  final UserResponseItem? user;
 
   Map<String, Object?> toJson() => _$ChatShowResponseItemToJson(this);
 }

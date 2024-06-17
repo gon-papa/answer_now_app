@@ -30,7 +30,7 @@ endif
 
 gen:
 	make openapi
-	dart run swagger_parser
+	fvm dart run swagger_parser
 	fvm flutter pub run build_runner build --delete-conflicting-outputs
 
 openapi: ## Generate openapi

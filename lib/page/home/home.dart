@@ -1,7 +1,4 @@
 import 'package:answer_now_app/importer.dart';
-import 'package:answer_now_app/page/home/home_provider.dart';
-import 'package:answer_now_app/util/date_format.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -40,14 +37,17 @@ class _SearchArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final debounce = ref.read(debounceProvider.notifier);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         onChanged: (value) {
-          ref.read(keywordProvider.notifier).update(value);
-          ref.invalidate(chatsProvider);
-          ref.read(chatsProvider.notifier).getChats();
-          return;
+          debounce.run(() {
+            ref.read(keywordProvider.notifier).update(value);
+            ref.invalidate(chatsProvider);
+            ref.read(chatsProvider.notifier).getChats();
+          }, 500);
         },
         decoration: InputDecoration(
           hintText: '企業名',
@@ -92,7 +92,7 @@ class _ChatArea extends HookConsumerWidget {
       debugPrint(asyncValue.error.toString());
       ref.read(errorMessageHandle).call(asyncValue.error.toString(), context);
       return const SizedBox();
-    } else if (asyncValue.hasData && asyncValue.data!.data!.data.isNotEmpty) {
+    } else if (asyncValue.hasData && asyncValue.data!.data!.data!.isNotEmpty) {
       final chats = ref.watch(chatsProvider);
 
       return ListView.builder(
@@ -101,9 +101,10 @@ class _ChatArea extends HookConsumerWidget {
         itemBuilder: (context, index) {
           return ListChat(
             title: chats[index]!.corporationName,
-            message: chats[index]!.latestMessage ?? '',
-            date: dataTimeFormatJp(chats[index]!.startedAt),
-            uuid: chats[index]!.uuid,
+            message: chats[index]!.latestMessage,
+            date: dataTimeFormatJp(chats[index]!.latestSendAt),
+            corporationUuid: chats[index]!.corporationUuid,
+            chatUuid: chats[index]!.uuid,
           );
         },
       );
@@ -119,13 +120,15 @@ class ListChat extends StatelessWidget {
     required this.title,
     required this.message,
     required this.date,
-    required this.uuid,
+    required this.corporationUuid,
+    required this.chatUuid,
   });
 
   final String title;
   final String message;
   final String date;
-  final String uuid;
+  final String corporationUuid;
+  final String chatUuid;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +141,10 @@ class ListChat extends StatelessWidget {
       ),
       trailing: Text(date),
       onTap: () {
-        print(uuid);
+        ChatDetail(
+          corporationUuid,
+          chatUuid,
+        ).go(context);
       },
     );
   }
