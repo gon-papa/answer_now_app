@@ -1,7 +1,63 @@
-import 'package:answer_now_app/importer.dart';
+import 'dart:convert';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+import 'package:answer_now_app/importer.dart';
+import 'package:flutter/foundation.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+class HomePage extends StatefulHookConsumerWidget {
+  const HomePage({
+    super.key,
+  });
+
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends ConsumerState<HomePage> {
+  late final WebSocketChannel ws;
+  final String? errorMessage = null;
+
+  @override
+  void initState() {
+    super.initState();
+    _listen();
+  }
+
+  Future<void> _listen() async {
+    final token = await ref.read(secure_token_provider).getToken();
+    const url = '${const String.fromEnvironment('ws_url')}/chat';
+    final notifier = ref.read(chatsProvider.notifier);
+    ws = WebSocketChannel.connect(Uri.parse(url));
+    // 最初にトークンを送る
+    ws.sink.add(json.encode({
+      'type': 'auth',
+      'token': token,
+    }));
+
+    ws.stream.listen(
+      (message) {
+        if (kDebugMode) {
+          print('message: $message');
+        }
+        final parsedJson = json.decode(message);
+        final chatIndexResponseItem =
+            ChatIndexResponseItem.fromJson(parsedJson);
+        notifier.update([chatIndexResponseItem]);
+      },
+      onDone: () {
+        if (kDebugMode) {
+          ref.read(errorMessageHandle).call('リアルタイム接続が切れました', context);
+          print('done');
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    ws.sink.close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +161,7 @@ class _ChatArea extends HookConsumerWidget {
             date: dataTimeFormatJp(chats[index]!.latestSendAt),
             corporationUuid: chats[index]!.corporationUuid,
             chatUuid: chats[index]!.uuid,
+            isRead: chats[index]!.isRead ?? true,
           );
         },
       );
@@ -122,6 +179,7 @@ class ListChat extends StatelessWidget {
     required this.date,
     required this.corporationUuid,
     required this.chatUuid,
+    required this.isRead,
   });
 
   final String title;
@@ -129,11 +187,23 @@ class ListChat extends StatelessWidget {
   final String date;
   final String corporationUuid;
   final String chatUuid;
+  final bool isRead;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title),
+      title: Row(
+        children: [
+          Text(title),
+          HorizontalMargin(width: 3.0.w),
+          if (!isRead)
+            const Icon(
+              Icons.circle,
+              color: Colors.green,
+              size: 10.0,
+            ),
+        ],
+      ),
       subtitle: Text(
         message,
         overflow: TextOverflow.ellipsis,

@@ -16,6 +16,7 @@ class ChatIndexResponseItem {
     required this.corporationName,
     required this.latestMessage,
     required this.latestSendAt,
+    this.isRead,
   });
   
   factory ChatIndexResponseItem.fromJson(Map<String, Object?> json) => _$ChatIndexResponseItemFromJson(json);
@@ -33,6 +34,10 @@ class ChatIndexResponseItem {
   final String latestMessage;
   @JsonKey(name: 'latest_send_at')
   final DateTime latestSendAt;
+
+  /// 既読フラグ
+  @JsonKey(name: 'is_read')
+  final bool? isRead;
 
   Map<String, Object?> toJson() => _$ChatIndexResponseItemToJson(this);
 }

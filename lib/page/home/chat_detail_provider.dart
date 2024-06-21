@@ -79,4 +79,36 @@ class ChatDetail extends _$ChatDetail {
       loading = false;
     }
   }
+
+  Future<Result<JsonResponse>> postChatMessage(
+    String corporationUuid,
+    String chatUuid,
+    String body,
+  ) async {
+    try {
+      final data = await ref
+          .read(chatRepositoryProvider)
+          .postChatMessage(chatUuid, corporationUuid, body);
+      if (data.isSuccess) {
+        return data;
+      } else {
+        throw ApiException('予期せぬエラーが発生しました。');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Result<JsonResponse>> postReadChat() async {
+    try {
+      final data = await ref.read(chatRepositoryProvider).postReadChat(uuid);
+      if (data.isSuccess) {
+        return data;
+      } else {
+        throw ApiException('予期せぬエラーが発生しました。');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

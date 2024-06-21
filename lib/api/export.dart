@@ -13,6 +13,7 @@ export 'models/auth_response_item.dart';
 export 'models/body_sign_in.dart';
 export 'models/chat_index_response.dart';
 export 'models/chat_index_response_item.dart';
+export 'models/chat_read_request.dart';
 export 'models/chat_save_message_request.dart';
 export 'models/chat_show_response.dart';
 export 'models/chat_show_response_item.dart';

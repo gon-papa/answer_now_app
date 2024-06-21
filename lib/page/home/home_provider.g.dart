@@ -34,7 +34,7 @@ final keywordProvider = AutoDisposeNotifierProvider<Keyword, String?>.internal(
 );
 
 typedef _$Keyword = AutoDisposeNotifier<String?>;
-String _$chatsHash() => r'd5f58e066ae783f41d19b27d991d1dd87d091985';
+String _$chatsHash() => r'630f257d8139bfdc830229abcf5a4c770a17c744';
 
 /// See also [Chats].
 @ProviderFor(Chats)

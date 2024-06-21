@@ -1,5 +1,5 @@
 import 'package:answer_now_app/importer.dart';
-import 'package:answer_now_app/repository/chat_repository.dart';
+import 'package:flutter/foundation.dart';
 
 part 'home_provider.g.dart';
 
@@ -22,8 +22,27 @@ class Chats extends _$Chats {
   int? cursor;
 
   void update(value) {
-    state = [...state, ...value]
-      ..sort((a, b) => b!.latestSendAt.compareTo(a!.latestSendAt));
+    // 現在の状態をコピー
+    final List<ChatIndexResponseItem?> updatedState = List.from(state);
+
+    for (var newItem in value) {
+      // 既存のチャットを探す
+      final index =
+          updatedState.indexWhere((item) => item?.uuid == newItem?.uuid);
+      if (index != -1) {
+        // 存在する場合は上書き
+        updatedState[index] = newItem;
+      } else {
+        // 存在しない場合は追加
+        updatedState.add(newItem);
+      }
+    }
+
+    // 最新の送信日時でソート
+    updatedState.sort((a, b) => b!.latestSendAt.compareTo(a!.latestSendAt));
+
+    // 状態を更新
+    state = updatedState;
   }
 
   Future<Result<ChatIndexResponse?>> getChats() async {
@@ -38,7 +57,6 @@ class Chats extends _$Chats {
         if (data.isSuccess && data.data != null) {
           cursor = data.data!.cursor;
           state = data.data!.data!;
-
           return data;
         } else {
           throw ApiException('予期せぬエラーが発生しました。');

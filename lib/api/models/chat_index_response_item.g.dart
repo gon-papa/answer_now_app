@@ -16,6 +16,7 @@ ChatIndexResponseItem _$ChatIndexResponseItemFromJson(
       corporationName: json['corporation_name'] as String,
       latestMessage: json['latest_message'] as String,
       latestSendAt: DateTime.parse(json['latest_send_at'] as String),
+      isRead: json['is_read'] as bool?,
     );
 
 Map<String, dynamic> _$ChatIndexResponseItemToJson(
@@ -28,4 +29,5 @@ Map<String, dynamic> _$ChatIndexResponseItemToJson(
       'corporation_name': instance.corporationName,
       'latest_message': instance.latestMessage,
       'latest_send_at': instance.latestSendAt.toIso8601String(),
+      'is_read': instance.isRead,
     };

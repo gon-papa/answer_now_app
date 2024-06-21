@@ -28,6 +28,7 @@ class ChatDetailPageState extends ConsumerState<ChatDetailPage> {
   void initState() {
     super.initState();
     final notifier = ref.read(ChatDetailProvider(widget.chatUuid).notifier);
+    notifier.postReadChat();
     notifier.getChatDetail();
     final url =
         '${const String.fromEnvironment('ws_url')}/chat/${widget.corporationUuid}/${widget.chatUuid}';
@@ -37,6 +38,7 @@ class ChatDetailPageState extends ConsumerState<ChatDetailPage> {
       final chatShowResponseItem = ChatShowResponseItem.fromJson(parsedJson);
 
       setState(() {
+        notifier.postReadChat();
         notifier.update([chatShowResponseItem]);
       });
     });
@@ -67,9 +69,20 @@ class ChatDetailPageState extends ConsumerState<ChatDetailPage> {
           if (kDebugMode) {
             print(message);
           }
+          try {
+            notifier.postChatMessage(
+              widget.corporationUuid,
+              widget.chatUuid,
+              message.text,
+            );
+          } catch (e) {
+            ref.read(errorMessageHandle).call(e.toString(), context);
+          }
         },
         onAttachmentPressed: () {
-          print('onAttachmentPressed');
+          if (kDebugMode) {
+            print('onAttachmentPressed');
+          }
         },
         customDateHeaderText: (date) {
           return DateFormat.yMMMMd('ja').add_Hm().format(date);

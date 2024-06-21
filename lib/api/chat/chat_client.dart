@@ -6,8 +6,10 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/chat_index_response.dart';
+import '../models/chat_read_request.dart';
 import '../models/chat_save_message_request.dart';
 import '../models/chat_show_response.dart';
+import '../models/json_response.dart';
 
 part 'chat_client.g.dart';
 
@@ -35,11 +37,27 @@ abstract class ChatClient {
     @Query('cursor') int? cursor,
   });
 
+  /// ユーザー用チャットメッセージ保存.
+  ///
+  /// ユーザー用チャットメッセージを保存します。.
+  @POST('/chat/message')
+  Future<JsonResponse> saveChatMessage({
+    @Body() required ChatSaveMessageRequest body,
+  });
+
   /// ゲスト用チャットメッセージ保存.
   ///
   /// チャットメッセージを保存します。.
   @POST('/chat/guest-message')
-  Future<void> saveChatMessage({
+  Future<void> saveGuestChatMessage({
     @Body() required ChatSaveMessageRequest body,
+  });
+
+  /// チャット既読処理.
+  ///
+  /// チャットメッセージを既読にします。.
+  @POST('/chat/read')
+  Future<JsonResponse> readChatMessage({
+    @Body() required ChatReadRequest body,
   });
 }
